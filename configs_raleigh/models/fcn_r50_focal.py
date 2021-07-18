@@ -1,6 +1,6 @@
 _base_ = [
     '../dataset.py',
-    '../runtime.py'
+    '../runtime_40k.py'
 ]
 
 # model settings

@@ -31,10 +31,9 @@ model = dict(
         norm_cfg=norm_cfg,
         align_corners=False,
         loss_decode=dict(
-            type='CrossEntropyLoss', use_sigmoid=False, loss_weight=1.0,
-            # class_weight=[0.81613419, 1.02067147, 0.98366622, 0.801115, 0.9483719, 0.9817077, 0.96933678, 1.47899673]
-            class_weight=[9.7886e-04, 2.1092e-02, 1.3271e-02, 7.4172e-04, 7.8445e-03, 1.3065e-02, 1.0547e-02, 9.3245e-01]
-            )),
+            type='FocalLoss', gamma=2, 
+            alpha=[9.7886e-04, 2.1092e-02, 1.3271e-02, 7.4172e-04, 7.8445e-03, 1.3065e-02, 1.0547e-02, 9.3245e-01],
+            loss_weight=1.0)),
     auxiliary_head=dict(
         type='FCNHead',
         in_channels=1024,
@@ -47,13 +46,12 @@ model = dict(
         norm_cfg=norm_cfg,
         align_corners=False,
         loss_decode=dict(
-            type='CrossEntropyLoss', use_sigmoid=False, loss_weight=0.4,
-            # class_weight=[0.81613419, 1.02067147, 0.98366622, 0.801115, 0.9483719, 0.9817077, 0.96933678, 1.47899673]
-            class_weight=[9.7886e-04, 2.1092e-02, 1.3271e-02, 7.4172e-04, 7.8445e-03, 1.3065e-02, 1.0547e-02, 9.3245e-01]
-            )),
+            type='FocalLoss', gamma=2, 
+            alpha=[9.7886e-04, 2.1092e-02, 1.3271e-02, 7.4172e-04, 7.8445e-03, 1.3065e-02, 1.0547e-02, 9.3245e-01],
+            loss_weight=1.0)),
     # model training and testing settings
     train_cfg=dict(),
     test_cfg=dict(mode='whole'))
 
 
-work_dir = "experiments/fcn_r50_ce_weighted/"
+work_dir = "experiments/fcn_r50_focal/"
