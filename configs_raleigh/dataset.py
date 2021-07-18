@@ -3,7 +3,9 @@ dataset_type = 'RaleighDataset'
 data_root = '/home/haoc/datasets/RaleighSatellite/processed_data'
 # TODO: experiments with this
 img_norm_cfg = dict(
-    mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_rgb=True)
+   mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_rgb=True)
+# img_norm_cfg = dict(
+#     mean=[24.357, 24.357, 24.357], std=[16.293, 16.293, 16.293], to_rgb=True)
 image_scale = (512, 512)
 crop_size = (512, 512)
 
