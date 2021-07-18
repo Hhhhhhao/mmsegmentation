@@ -32,7 +32,7 @@ model = dict(
         align_corners=False,
         loss_decode=dict(
             type='FocalLoss', gamma=2, 
-            alpha=[9.7886e-04, 2.1092e-02, 1.3271e-02, 7.4172e-04, 7.8445e-03, 1.3065e-02, 1.0547e-02, 9.3245e-01],
+            alpha=[0.81613419, 1.02067147, 0.98366622, 0.801115, 0.9483719, 0.9817077, 0.96933678, 1.47899673],
             loss_weight=1.0)),
     auxiliary_head=dict(
         type='FCNHead',
@@ -47,8 +47,8 @@ model = dict(
         align_corners=False,
         loss_decode=dict(
             type='FocalLoss', gamma=2, 
-            alpha=[9.7886e-04, 2.1092e-02, 1.3271e-02, 7.4172e-04, 7.8445e-03, 1.3065e-02, 1.0547e-02, 9.3245e-01],
-            loss_weight=1.0)),
+            alpha=[0.81613419, 1.02067147, 0.98366622, 0.801115, 0.9483719, 0.9817077, 0.96933678, 1.47899673],
+            loss_weight=0.4)),
     # model training and testing settings
     train_cfg=dict(),
     test_cfg=dict(mode='whole'))
