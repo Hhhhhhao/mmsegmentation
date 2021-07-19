@@ -17,22 +17,22 @@ class FocalLoss(nn.Module):
         self.size_average = size_average
         self.loss_weight = loss_weight
 
-    def forward(self, input, target, **kwargs):
-        if input.dim()>2:
-            input = input.view(input.size(0),input.size(1),-1)  # N,C,H,W => N,C,H*W
-            input = input.transpose(1,2)    # N,C,H*W => N,H*W,C
-            input = input.contiguous().view(-1,input.size(2))   # N,H*W,C => N*H*W,C
-        target = target.view(-1, 1)
+    def forward(self, cls_score, label, **kwargs):
+        if cls_score.dim()>2:
+            cls_score = cls_score.view(cls_score.size(0),cls_score.size(1),-1)  # N,C,H,W => N,C,H*W
+            cls_score = cls_score.transpose(1,2)    # N,C,H*W => N,H*W,C
+            cls_score = cls_score.contiguous().view(-1,cls_score.size(2))   # N,H*W,C => N*H*W,C
+        label = label.view(-1, 1)
 
-        logpt = F.log_softmax(input, dim=-1)
-        logpt = logpt.gather(1, target)
+        logpt = F.log_softmax(cls_score, dim=-1)
+        logpt = logpt.gather(1, label)
         logpt = logpt.view(-1)
         pt = Variable(logpt.data.exp())
 
         if self.alpha is not None:
-            if self.alpha.type()!=input.data.type():
-                self.alpha = self.alpha.type_as(input.data)
-            at = self.alpha.gather(0,target.data.view(-1))
+            if self.alpha.type()!=cls_score.data.type():
+                self.alpha = self.alpha.type_as(cls_score.data)
+            at = self.alpha.gather(0,label.data.view(-1))
             logpt = logpt * Variable(at)
 
         loss = -1 * (1-pt)**self.gamma * logpt

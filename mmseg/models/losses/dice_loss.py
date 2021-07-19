@@ -86,8 +86,8 @@ class DiceLoss(nn.Module):
         self.ignore_index = ignore_index
 
     def forward(self,
-                pred,
-                target,
+                cls_score,
+                label,
                 avg_factor=None,
                 reduction_override=None,
                 **kwards):
@@ -95,19 +95,19 @@ class DiceLoss(nn.Module):
         reduction = (
             reduction_override if reduction_override else self.reduction)
         if self.class_weight is not None:
-            class_weight = pred.new_tensor(self.class_weight)
+            class_weight = cls_score.new_tensor(self.class_weight)
         else:
             class_weight = None
 
-        pred = F.softmax(pred, dim=1)
-        num_classes = pred.shape[1]
+        cls_score = F.softmax(cls_score, dim=1)
+        num_classes = cls_score.shape[1]
         one_hot_target = F.one_hot(
-            torch.clamp(target.long(), 0, num_classes - 1),
+            torch.clamp(label.long(), 0, num_classes - 1),
             num_classes=num_classes)
-        valid_mask = (target != self.ignore_index).long()
+        valid_mask = (label != self.ignore_index).long()
 
         loss = self.loss_weight * dice_loss(
-            pred,
+            cls_score,
             one_hot_target,
             valid_mask=valid_mask,
             reduction=reduction,

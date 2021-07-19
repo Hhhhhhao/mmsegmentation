@@ -249,7 +249,7 @@ class LovaszLoss(nn.Module):
                  loss_type='multi_class',
                  classes='present',
                  per_image=False,
-                 reduction='mean',
+                 reduction='none',
                  class_weight=None,
                  loss_weight=1.0):
         super(LovaszLoss, self).__init__()

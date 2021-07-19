@@ -50,4 +50,4 @@ model = dict(
     test_cfg=dict(mode='whole'))
 
 
-work_dir = "experiments/fcn_r50_focal/"
+work_dir = "experiments/fcn_r50_dice/"

@@ -1,6 +1,6 @@
 _base_ = [
     '../dataset.py',
-    '../runtime_40k.py'
+    '../runtime_20k.py'
 ]
 
 # model settings
@@ -31,7 +31,11 @@ model = dict(
         norm_cfg=norm_cfg,
         align_corners=False,
         loss_decode=dict(
-            type='LovaszLoss', loss_weight=1.0)),
+            type='CombinedLoss', 
+            losses=['DiceLoss', 'LovaszLoss'],
+            lambdas=[1.0, 1.0],
+            loss_weight=1.0,
+            class_weight=[0.81613419, 1.02067147, 0.98366622, 0.801115, 0.9483719, 0.9817077, 0.96933678, 1.47899673])),
     auxiliary_head=dict(
         type='FCNHead',
         in_channels=1024,
@@ -44,10 +48,14 @@ model = dict(
         norm_cfg=norm_cfg,
         align_corners=False,
         loss_decode=dict(
-            type='LovaszLoss', loss_weight=0.4)),
+            type='CombinedLoss', 
+            losses=['DiceLoss', 'LovaszLoss'],
+            lambdas=[1.0, 1.0],
+            loss_weight=0.4,
+            class_weight=[0.81613419, 1.02067147, 0.98366622, 0.801115, 0.9483719, 0.9817077, 0.96933678, 1.47899673])),
     # model training and testing settings
     train_cfg=dict(),
     test_cfg=dict(mode='whole'))
 
 
-work_dir = "experiments/fcn_r50_lovasz/"
+work_dir = "experiments/fcn_r50_dice_lovasz_weighted/"

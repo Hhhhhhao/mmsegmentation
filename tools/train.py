@@ -3,7 +3,7 @@ import copy
 import os
 import os.path as osp
 import time
-
+# os.environ['CUDA_VISIBLE_DEVICES'] = '4'
 import mmcv
 import torch
 from mmcv.runner import init_dist
@@ -19,7 +19,7 @@ from mmseg.utils import collect_env, get_root_logger
 def parse_args():
     parser = argparse.ArgumentParser(description='Train a segmentor')
     parser.add_argument('config', help='train config file path')
-    # parser.add_argument('--config', default='configs_raleigh/models/fcn_r50_focal.py', help='train config file path')
+    # parser.add_argument('--config', default='configs_raleigh/models/fcn_r50_dice_lovasz_weighted.py', help='train config file path')
     parser.add_argument('--work-dir', help='the dir to save logs and models')
     parser.add_argument(
         '--load-from', help='the checkpoint file to load weights from')
