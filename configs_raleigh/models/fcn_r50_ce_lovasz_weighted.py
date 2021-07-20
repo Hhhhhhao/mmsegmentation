@@ -32,7 +32,7 @@ model = dict(
         align_corners=False,
         loss_decode=dict(
             type='CombinedLoss', 
-            losses=['DiceLoss', 'LovaszLoss'],
+            losses=['CrossEntropyLoss', 'LovaszLoss'],
             lambdas=[1.0, 1.0],
             loss_weight=1.0,
             class_weight=[0.81613419, 1.02067147, 0.98366622, 0.801115, 0.9483719, 0.9817077, 0.96933678, 1.47899673])),
@@ -49,7 +49,7 @@ model = dict(
         align_corners=False,
         loss_decode=dict(
             type='CombinedLoss', 
-            losses=['DiceLoss', 'LovaszLoss'],
+            losses=['CrossEntropyLoss', 'LovaszLoss'],
             lambdas=[1.0, 1.0],
             loss_weight=0.4,
             class_weight=[0.81613419, 1.02067147, 0.98366622, 0.801115, 0.9483719, 0.9817077, 0.96933678, 1.47899673])),
@@ -58,4 +58,4 @@ model = dict(
     test_cfg=dict(mode='whole'))
 
 
-work_dir = "experiments/fcn_r50_dice_lovasz_weighted_v2/"
+work_dir = "experiments/fcn_r50_ce_lovasz_weighted/"
